@@ -17,7 +17,7 @@ namespace HotelListing.Models
         [DisplayName("Short Name")]
         public String ShortName { get; set; }
     }
-    public class CountryDTO : CreateHotelsDTO
+    public class CountryDTO : CreateCountryDTO
     {
         public int Id { get; set; }
         public IList<HotelDTO> Hotels { get; set; }
