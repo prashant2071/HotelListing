@@ -26,6 +26,8 @@ namespace HotelListing.Controllers
             _mapper = mapper;
         }
         [HttpGet("GetAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> GetHotels()
         {
             try
@@ -42,6 +44,8 @@ namespace HotelListing.Controllers
             }
         }
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> GetHotel(int id)
         {
             try
