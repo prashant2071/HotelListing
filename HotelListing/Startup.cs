@@ -3,6 +3,7 @@ using HotelListing.Configurations;
 using HotelListing.Data;
 using HotelListing.IRepository;
 using HotelListing.Repository;
+using HotelListing.services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,11 +40,13 @@ namespace HotelListing
 
             services.AddAuthentication();
             services.ConfigureIdentity();
+            services.ConfigureJWT(Configuration);
 
             services.AddControllers().AddNewtonsoftJson(op=>
             op.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddTransient<IUnitOfWork,UnitOfWork > ();
+            services.AddScoped<IAuthManager, AuthManager>();
 
             services.AddCors(options =>
             {
@@ -71,10 +74,16 @@ namespace HotelListing
             }
 
             app.UseHttpsRedirection();
+
             app.UseSwagger();
+
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HotelListing v1"));
             app.UseCors("AllowAll");
+
             app.UseRouting();
+
+            app.UseAuthentication();
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
